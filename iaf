@@ -1,0 +1,96 @@
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+void main() => runApp(IAFCleaningApp());
+
+class IAFCleaningApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(primaryColor: Colors.blueAccent),
+      home: HomeScreen(),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  final String phoneNumber = "8822485417";
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("IAF Cleaning Services"),
+        backgroundColor: Colors.blueAccent,
+        centerTitle: true,
+        elevation: 0,
+      ),
+      body: Column(
+        children: [
+          // Banner ki jagah ek Sundar Info Box
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.blueAccent,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+              ),
+            ),
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 40,
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.cleaning_services, size: 40, color: Colors.blueAccent),
+                ),
+                SizedBox(height: 10),
+                Text("Ahmed Mazumder", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+                Text("Contact: $phoneNumber", style: TextStyle(color: Colors.white70)),
+              ],
+            ),
+          ),
+          
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.all(15),
+              children: [
+                Text("Our Rates & Services", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                SizedBox(height: 10),
+                _serviceTile(Icons.home, "1 BHK Deep Cleaning", "2999", "1 Hall, 1 Bed, 1 Kitchen, 1 Bath"),
+                _serviceTile(Icons.apartment, "2 BHK Deep Cleaning", "5599", "1 Hall, 2 Bed, 1 Kitchen, 2 Bath"),
+                _serviceTile(Icons.weekend, "Sofa Cleaning", "999", "Deep Shampoo & Vacuum"),
+                _serviceTile(Icons.kitchen, "Kitchen Deep Cleaning", "1499", "Oil & Stain Removal"),
+                _serviceTile(Icons.clean_hands, "Bathroom Cleaning", "599", "Scrubbing & Sanitization"),
+              ],
+            ),
+          ),
+        ],
+      ),
+      // WhatsApp Booking Button
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => launchUrl(Uri.parse("https://wa.me/91$phoneNumber")),
+        label: Text("Book Now"),
+        icon: Icon(Icons.chat),
+        backgroundColor: Colors.green,
+      ),
+    );
+  }
+
+  Widget _serviceTile(IconData icon, String title, String price, String desc) {
+    return Card(
+      elevation: 2,
+      margin: EdgeInsets.only(bottom: 12),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: ListTile(
+        contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+        leading: Icon(icon, color: Colors.blueAccent, size: 30),
+        title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: Text(desc),
+        trailing: Text("₹$price", style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold, fontSize: 16)),
+      ),
+    );
+  }
+}
